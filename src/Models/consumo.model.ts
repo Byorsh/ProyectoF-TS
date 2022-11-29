@@ -1,5 +1,6 @@
 export interface Consumo{
-    id_cliente:number;
-    id_factura:number;
+    id_Consumo:number;
+    fecha:Date;
     consumo:number;
+    id_Cliente:number;
 }

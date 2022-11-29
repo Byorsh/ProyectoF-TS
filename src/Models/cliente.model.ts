@@ -1,7 +1,8 @@
 export interface ICliente{
+    id_Cliente:number;
     nombre: string;
     correo: string;
     telefono: string;
-    edad: number;
     direccion: string;
+    fecha_nacimiento: Date;
 }
