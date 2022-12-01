@@ -18,7 +18,7 @@ export class ClienteController{
     }
 
     @Get('/all')
-    getClient(){
+    getClientes(): ICliente[]{
         return this.ClienteService.getAll()
     }
 }

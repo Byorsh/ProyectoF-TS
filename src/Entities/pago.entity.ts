@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Consumo } from './consumo.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity()
 export class Pago{
@@ -10,4 +11,8 @@ export class Pago{
     
     @Column()
     pagado:boolean;
+
+    @ManyToOne(() => Consumo, (consumo) => consumo.pago)
+    @JoinColumn({ name: 'id_consumo'})
+    consumo: Consumo;
 }

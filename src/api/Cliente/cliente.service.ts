@@ -2,19 +2,26 @@ import { ICliente } from './../../Models/cliente.model';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Cliente } from 'src/Entities/cliente.entity';
+import { Cliente as ClienteEntity} from 'src/Entities/cliente.entity';
 
 @Injectable()
 export class ClienteService{
     constructor(
-        @InjectRepository(Cliente) private clientEntity : Repository<Cliente>
+        @InjectRepository(ClienteEntity) 
+        private clienteEntity : Repository<ClienteEntity>
     ){}
     
+    private readonly Clientes: ICliente[] = [];
+
     async create(cliente: ICliente){
-        return await this.clientEntity.save(cliente)
+        return await this.clienteEntity.insert(cliente);
     }
 
-    getAll(){
-        return this.clientEntity.find()
+    getAll(): ICliente[]{
+        return this.Clientes;
+    }
+
+    findAll(){
+        return this.clienteEntity.find({relations:['consumo']});
     }
 }

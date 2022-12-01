@@ -1,6 +1,7 @@
+import { IPago } from './pago.model';
 export interface IConsumo{
-    id_Consumo:number;
+    id:number;
     fecha:Date;
-    consumo:number;
-    id_Cliente:number;
+    pago: IPago[];
+    
 }
