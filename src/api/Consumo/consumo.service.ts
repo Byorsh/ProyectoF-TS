@@ -19,9 +19,34 @@ export class ConsumoService{
         private clienteService : ClienteService
     ){}
 
-    async create (consumo:Consumo){
+    async create(consumo:IConsumo): Promise<string | boolean>{
+        const date = new Date;
         let total = 0;
-        let pago = consumo.pago;
+        let pago = consumo.pagado;
+        let edad = this.getEdad(new Date(await this.clienteService.getByID(consumo.id_cliente)))
+        if(edad > 500){return false}
+        
+
+        if (consumo.consumo > 1 && consumo.consumo < 101) {
+            total = consumo.consumo * 150;
+        }else if (consumo.consumo > 101 && consumo.consumo < 301) {
+            total = consumo.consumo * 170;
+        } else {
+            total = consumo.consumo * 190;
+        }
+
+        if (edad > 50 ){
+            total = total - (total * .10)
+        }
+        const response = await this.consumoEntity.save({
+            fecha: date ,
+            consumo: consumo.consumo,
+            id_Cliente : consumo.id_cliente
+        })
+        
+
+        await this.pagoService.create(response.id, total, pago)
+        return true
         
     }
 
@@ -47,21 +72,19 @@ export class ConsumoService{
         })
     }
 
-    async agregarConsumo(data:any){
-        const direccionIdCliente = data.id_consumo;
-        const cliente = await this.clienteEntity.findOne({
-            where:{
-                id:direccionIdCliente
-            },
-        });
-        if(!cliente){
-            throw new NotFoundException('No existe el cliente');
+    getEdad(date: Date) {
+        let hoy = new Date()
+        let fechaNacimiento = new Date(date)
+        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear()
+        let diferenciaMeses = hoy.getMonth() - fechaNacimiento.getMonth()
+        if (
+          diferenciaMeses < 0 ||
+          (diferenciaMeses === 0 && hoy.getDate() < fechaNacimiento.getDate())
+        ) {
+          edad--
         }
-
-        const nuevoConsumo = new Consumo();
-        nuevoConsumo.id_cliente = cliente;
-        nuevoConsumo.fecha = data.fecha;
-        nuevoConsumo.consumo = data.total;
-        return this.consumoRepos.save(nuevoConsumo);
+        return edad
     }
+
+    
 }

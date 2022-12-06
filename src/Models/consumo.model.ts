@@ -1,7 +1,8 @@
 
 export interface IConsumo{
-    id:number;
-    fecha:Date;
+    
+    id_cliente:number;
+    consumo:number;
     pagado:boolean;
     
 }
