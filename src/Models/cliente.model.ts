@@ -7,6 +7,5 @@ export interface ICliente{
     correo: string;
     telefono: string;
     direccion: string;
-    fecha_nacimiento: Date;
-    consumo: IConsumo[];
+    fecha_nacimiento: string;
 }

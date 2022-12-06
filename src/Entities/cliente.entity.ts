@@ -16,10 +16,10 @@ export class Cliente{
     telefono:string;
 
     @Column()
-    edad:number;
-
-    @Column()
     direccion:string;
+    
+    @Column()
+    fecha_nac:string;
 
     @OneToMany(()=> Consumo, (consumo) => consumo.id_cliente)
     consumo: Consumo[];
