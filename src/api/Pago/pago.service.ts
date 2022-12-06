@@ -8,24 +8,27 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class PagoService{
     constructor(
-        @InjectRepository(Pago) private pagoRepos : Repository<Pago>,
-        @InjectRepository(Consumo) private consumoRepos : Repository<Consumo>
+        @InjectRepository(Pago) private pagoEntity : Repository<Pago>
     ){}
 
-    async agregarPago(data : any){
-        const direccionIdConsumo = data.id_consumo;
-        const consumo = await this.consumoRepos.findOne({
-            where:{
-                id:direccionIdConsumo
-            }
-        });
-        if(!consumo){
-            throw new NotFoundException('No se encontro el consumo');
-        }
-        const nuevoPago = new Pago();
-        nuevoPago.consumo = consumo;
-        nuevoPago.pagado = data.pagado;
-        nuevoPago.monto = data.monto;
-        return this.pagoRepos.save(nuevoPago);
+    async create(id: number, total : number, pagado: boolean){
+        
+        return await this.pagoEntity.save({
+            total: total ,
+            id_Consumo: id,
+            pagado: pagado
+        })
+    }
+
+    getAll(){
+        return this.pagoEntity.find()
+    }
+
+    getPagado(){
+        return this.pagoEntity.find({where:{pagado: true}})
+    }
+
+    getNoPagado(){
+        return this.pagoEntity.find({where:{pagado: false}})
     }
 }

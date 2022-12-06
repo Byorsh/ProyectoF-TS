@@ -7,12 +7,13 @@ import { ConsumoController } from './consumo.controller';
 import { ConsumoService } from './consumo.service';
 import { ClienteController } from '../Cliente/cliente.controller';
 import { ClienteService } from '../Cliente/cliente.service';
+import { PagoService } from '../Pago/pago.service';
 
 
 @Module({
     imports: [TypeOrmModule.forFeature([Consumo, Cliente])],
     providers: [ConsumoService, ClienteService],
-    controllers: [ConsumoController, ClienteController],
+    controllers: [ConsumoController, ClienteController, PagoService],
     exports: [TypeOrmModule]
 })
 export class ConsumoModule{}

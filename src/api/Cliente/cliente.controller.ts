@@ -21,4 +21,9 @@ export class ClienteController{
     getClientes(): ICliente[]{
         return this.ClienteService.getAll()
     }
+
+    @Get('/byID')
+    get(@Body() params: number){
+        this.ClienteService.getByID(params)
+    }
 }

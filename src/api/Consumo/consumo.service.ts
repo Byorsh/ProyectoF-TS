@@ -2,20 +2,49 @@ import { IConsumo } from './../../Models/consumo.model';
 import { Consumo } from 'src/Entities/consumo.entity';
 import { Pago } from 'src/Entities/pago.entity';
 import { Cliente } from 'src/Entities/cliente.entity';
+import { PagoService } from '../Pago/pago.service';
+import { ClienteService } from '../Cliente/cliente.service';
+
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable, NotFoundException} from '@nestjs/common';
+import { Injectable, Get, NotFoundException} from '@nestjs/common';
 
 @Injectable()
 export class ConsumoService{
     constructor(
         @InjectRepository(Consumo) private consumoEntity:Repository<Consumo>,
         @InjectRepository(Cliente) private clienteEntity:Repository<Cliente>,
-        @InjectRepository(Consumo) private consumoRepos:Repository<Consumo>
+        @InjectRepository(Consumo) private consumoRepos:Repository<Consumo>,
+        private pagoService : PagoService,
+        private clienteService : ClienteService
     ){}
 
     async create (consumo:Consumo){
-        return await this.consumoEntity.insert(consumo);
+        let total = 0;
+        let pago = consumo.pago;
+        
+    }
+
+    getAll(){
+        return this.consumoEntity.find()
+    }
+
+    getMaxConsumo(){
+        return this.consumoEntity.find({
+            take:1,
+            order: {
+                consumo: 'DESC'
+            }
+        })
+    }
+
+    getMinConsumo(){
+        return this.consumoEntity.find({
+            take:1,
+            order: {
+                consumo: 'ASC'
+            }
+        })
     }
 
     async agregarConsumo(data:any){
@@ -30,7 +59,7 @@ export class ConsumoService{
         }
 
         const nuevoConsumo = new Consumo();
-        nuevoConsumo.cliente = cliente;
+        nuevoConsumo.id_cliente = cliente;
         nuevoConsumo.fecha = data.fecha;
         nuevoConsumo.consumo = data.total;
         return this.consumoRepos.save(nuevoConsumo);

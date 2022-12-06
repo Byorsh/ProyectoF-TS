@@ -14,7 +14,7 @@ export class ClienteService{
     private readonly Clientes: ICliente[] = [];
 
     async create(cliente: ICliente){
-        return await this.clienteEntity.insert(cliente);
+        return await this.clienteEntity.save(cliente);
     }
 
     getAll(): ICliente[]{
@@ -23,5 +23,15 @@ export class ClienteService{
 
     findAll(){
         return this.clienteEntity.find({relations:['consumo']});
+    }
+
+    async getByID(id_cliente:number):Promise<number>{
+        const clienteExiste = await this.clienteEntity.findOne({where:{id: id_cliente}})
+        if(!clienteExiste){
+            console.error(`No he encontrado el producto con id ${id_cliente}`)
+            return 999
+           // throw new NotFoundException(`No he encontrado el producto con id ${id_cliente}`);
+        }
+        return (await this.clienteEntity.findOne({where:{id: id_cliente}})).edad
     }
 }

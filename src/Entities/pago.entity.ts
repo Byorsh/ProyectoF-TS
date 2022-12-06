@@ -1,5 +1,5 @@
 import { Consumo } from './consumo.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity()
 export class Pago{
@@ -14,5 +14,5 @@ export class Pago{
 
     @ManyToOne(() => Consumo, (consumo) => consumo.pago)
     @JoinColumn({ name: 'id_consumo'})
-    consumo: Consumo;
+    id_Consumo: number;
 }

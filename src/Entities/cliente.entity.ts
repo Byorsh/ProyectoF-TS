@@ -21,6 +21,6 @@ export class Cliente{
     @Column()
     direccion:string;
 
-    @OneToMany(()=> Consumo, (consumo) => consumo.cliente)
+    @OneToMany(()=> Consumo, (consumo) => consumo.id_cliente)
     consumo: Consumo[];
 }
