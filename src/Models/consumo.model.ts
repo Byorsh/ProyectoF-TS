@@ -1,8 +1,9 @@
-
+import { Consumo } from './../Entities/consumo.entity';
+import { IPago } from './pago.model';
 export interface IConsumo{
-    
-    id_cliente:number;
+    id:number;
+    fecha:Date;
     consumo:number;
-    pagado:boolean;
+    id_cliente:number;
     
 }

@@ -15,7 +15,7 @@ export class Consumo{
 
     @ManyToOne(()=> Cliente, (cliente)=>cliente.consumo)
     @JoinColumn({ name: 'id_cliente'})
-    id_cliente: Cliente;
+    id_cliente: number;
 
     @OneToMany(()=> Pago, (pago) => pago.id_Consumo)
     pago: Pago[];

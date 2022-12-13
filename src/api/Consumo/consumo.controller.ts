@@ -8,14 +8,8 @@ export class ConsumoController{
     constructor(private consumoService: ConsumoService){}
 
     @Post()
-    Create(@Body() params:Consumo): string | boolean{
+    Create(@Body() params: IConsumo){
         this.consumoService.create(params);
-        return true;
-    }
-
-    @Post('/consumocliente')
-    agregarConsumo(@Body() body:any){
-        return this.consumoService.agregarConsumo(body);
     }
 
     @Get('/all')
