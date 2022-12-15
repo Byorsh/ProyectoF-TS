@@ -7,5 +7,5 @@ export interface ICliente{
     correo: string;
     telefono: string;
     direccion: string;
-    fecha_nacimiento: string;
+    fechaNac: Date;
 }

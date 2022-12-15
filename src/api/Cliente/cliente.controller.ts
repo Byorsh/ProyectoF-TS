@@ -17,13 +17,22 @@ export class ClienteController{
         }
     }
 
-    @Get('/all')
-    getClientes(): ICliente[]{
-        return this.ClienteService.getAll()
+    @Get('/clientesPagado')
+    getClientesPagoB(){
+        try {
+            return this.ClienteService.getPagado();
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
-
-    @Get('/byID')
-    get(@Body() params: number){
-        this.ClienteService.getByID(params)
+    @Get('/clientesPagoPendiente')
+    getClientesPagoP(){
+        try {
+            return this.ClienteService.getPagoPendiente();
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
 }

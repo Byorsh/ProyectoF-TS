@@ -9,21 +9,20 @@ export class ConsumoController{
 
     @Post()
     Create(@Body() params: IConsumo){
-        this.consumoService.create(params);
+        try{
+            this.consumoService.create(params);
+        } catch(error){
+            console.log(`Error: ${error}`);
+        }
     }
 
-    @Get('/all')
-    getClient(){
-        return this.consumoService.getAll()
+    @Get()
+    getConsumos(){
+        try{
+            this.consumoService.getAll();
+        }catch (error){
+            console.log(`Error: ${error}`);
+        }
     }
 
-    @Get('/maxConsumo')
-    getMaxConsumo(){
-        return this.consumoService.getMaxConsumo()
-    }
-
-    @Get('/minConsumo')
-    getMinConsumo(){
-        return this.consumoService.getMinConsumo()
-    }
 }

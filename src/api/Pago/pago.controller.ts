@@ -1,24 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { ConsumoService } from './../Consumo/consumo.service';
 import { PagoService } from './pago.service';
-import { Pago } from 'src/Entities/pago.entity';
-import { ConsumoService } from '../Consumo/consumo.service';
 
-@Controller('Pago')
+import { IPago } from 'src/Models/pago.model';
+import { Controller, Body, Post } from '@nestjs/common';
+
+@Controller('pago')
 export class PagoController{
-    constructor(private pagoService: PagoService){}
+    constructor(private pagoService: PagoService, private consumoService: ConsumoService){}
 
-    @Get('/all')
-    getClient(){
-        return this.pagoService.getAll()
-    }
-
-    @Get('/pagado')
-    getClientPagado(){
-        return this.pagoService.getPagado()
-    }
-
-    @Get('/noPagado')
-    getClientNoPagado(){
-        return this.pagoService.getNoPagado()
+    @Post()
+    Create(@Body() params: IPago){
+        return this.pagoService.hacerPago(params.id, params.monto);
     }
 }
